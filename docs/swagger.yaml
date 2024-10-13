@@ -1,0 +1,66 @@
+basePath: /
+definitions:
+  models.ErrorResponse:
+    description: Структура, используемая для возврата сообщений об ошибках.
+    properties:
+      error:
+        description: Сообщение об ошибке
+        type: string
+    type: object
+  models.SongDetail:
+    description: Детали песни, включая дату выхода, текст и ссылку
+    properties:
+      link:
+        type: string
+      releaseDate:
+        type: string
+      text:
+        type: string
+    type: object
+host: localhost:9090
+info:
+  contact:
+    email: i@evgesh4.ru
+    name: Евгений
+    url: сайт пока отсутствует
+  description: API для получения информации о песнях по названию группы и песни. Была
+    реализована в целях проверки корректности работы основной программы.
+  termsOfService: http://swagger.io/terms/
+  title: Music Info API
+  version: 0.0.1
+paths:
+  /info:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает информацию о песне по группе и названию.
+      parameters:
+      - description: Название группы
+        in: query
+        name: group
+        required: true
+        type: string
+      - description: Название песни
+        in: query
+        name: song
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Информация о песне
+          schema:
+            $ref: '#/definitions/models.SongDetail'
+        "400":
+          description: 'Ошибка: отсутствуют необходимые параметры'
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: 'Ошибка: песня не найдена'
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Получить информацию о песне
+      tags:
+      - songs
+swagger: "2.0"

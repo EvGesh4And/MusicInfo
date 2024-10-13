@@ -1,0 +1,96 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API для получения информации о песнях по названию группы и песни. Была реализована в целях проверки корректности работы основной программы.",
+        "title": "Music Info API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Евгений",
+            "url": "сайт пока отсутствует",
+            "email": "i@evgesh4.ru"
+        },
+        "version": "0.0.1"
+    },
+    "host": "localhost:9090",
+    "basePath": "/",
+    "paths": {
+        "/info": {
+            "get": {
+                "description": "Возвращает информацию о песне по группе и названию.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "songs"
+                ],
+                "summary": "Получить информацию о песне",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Название группы",
+                        "name": "group",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Название песни",
+                        "name": "song",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о песне",
+                        "schema": {
+                            "$ref": "#/definitions/models.SongDetail"
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка: отсутствуют необходимые параметры",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка: песня не найдена",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.ErrorResponse": {
+            "description": "Структура, используемая для возврата сообщений об ошибках.",
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "Сообщение об ошибке",
+                    "type": "string"
+                }
+            }
+        },
+        "models.SongDetail": {
+            "description": "Детали песни, включая дату выхода, текст и ссылку",
+            "type": "object",
+            "properties": {
+                "link": {
+                    "type": "string"
+                },
+                "releaseDate": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
