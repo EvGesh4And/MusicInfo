@@ -1,4 +1,4 @@
-# Music Info API
+# MusicInfo API
 
 ## Описание
 
